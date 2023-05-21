@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="3.3" release="8.1|CoreRPG:4.1">
+	<announcement text="LanguageTracker v1.0 FGC/FGU 5E, 3/12/23\r2023 Justin Freitas" font="emotefont" icon="languagetracker_icon" />
+	<properties>
+		<name>Feature: LanguageTracker</name>
+		<version>1.0</version>
+		<loadorder>1001</loadorder>
+		<author>Justin Freitas</author>
+		<description>Tracks the languages used by the party and how they might relate to NPCs in the Combat Tracker.</description>
+		<ruleset>
+			<name>5E</name>
+		</ruleset>
+	</properties>
+
+	<base>
+		<script name="LanguageTracker" file="scripts/languagetracker.lua" />
+		<icon name="languagetracker_icon" file="graphics/icons/languagetracker_icon.png" />
+
+		<string name="option_header_languagetracker">LanguageTracker (GM)</string>
+		<string name="option_label_LANGUAGETRACKER_VERBOSE">Chat: Verbose Rule Reminders</string>
+	</base>
+</root>
