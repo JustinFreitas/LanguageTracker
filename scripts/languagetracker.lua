@@ -1,4 +1,4 @@
--- This extension contains 5e SRD mounted combat rules.  For license details see file: Open Gaming License v1.0a.txt
+-- This extension contains 5e SRD languages.  For license details see file: Open Gaming License v1.0a.txt
 
 MAX = "max"
 LANGUAGETRACKER_VERBOSE = "LANGUAGETRACKER_VERBOSE"
@@ -42,7 +42,7 @@ end
 function displayChatMessage(sFormattedText, bSecret)
 	if not sFormattedText then return end
 
-	local msg = {font = "msgfont", icon = "languagetracker_icon", secret = bSecret, text = sFormattedText}
+	local msg = {font = "msgfont", icon = "languagetracker_icon", secret = false, text = sFormattedText}
 
 	-- deliverChatMessage() is a broadcast mechanism, addChatMessage() is local only.
 	if bSecret then
@@ -130,9 +130,10 @@ function processChatCommand(_, sParams)
     local aOutput = {}
     local scope = "Party"
     if sParams == "all" then
-        scope = "All"
+        scope = "All Actor"
     end
-    insertFormattedTextWithSeparatorIfNonEmpty(aOutput, "\r-- " .. scope .. " Known Languages --")
+
+    insertFormattedTextWithSeparatorIfNonEmpty(aOutput, "\rLanguageTracker, " .. scope .. " Languages:")
     for _,v in ipairs(sortedLanguages) do
         local pcs = ""
         local bFirstRow = true
