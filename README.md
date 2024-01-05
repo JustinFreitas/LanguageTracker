@@ -2,7 +2,7 @@
 
 https://github.com/JustinFreitas/LanguageTracker
 
-LanguageTracker v1.0, by Justin Freitas
+LanguageTracker v1.1, by Justin Freitas
 
 ReadMe and Usage Notes
 

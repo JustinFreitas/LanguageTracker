@@ -1,16 +1,22 @@
 -- This extension contains 5e SRD languages.  For license details see file: Open Gaming License v1.0a.txt
 
 MAX = "max"
+LANGUAGETRACKER_FRAME_STYLE = "LANGUAGETRACKER_FRAME_STYLE"
 LANGUAGETRACKER_VERBOSE = "LANGUAGETRACKER_VERBOSE"
+NONE = "none"
 OFF = "off"
+ON = "on"
 USER_ISHOST = false
 
 function onInit()
 	local option_header = "option_header_languagetracker"
+    local option_val_none = "option_val_none_LANGUAGETRACKER"
 	local option_val_off = "option_val_off"
 	local option_entry_cycler = "option_entry_cycler"
 	OptionsManager.registerOption2(LANGUAGETRACKER_VERBOSE, false, option_header, "option_label_LANGUAGETRACKER_VERBOSE", option_entry_cycler,
 	{ baselabel = "option_val_max", baseval = MAX, labels = "option_val_standard|" .. option_val_off, values = "standard|" .. OFF, default = MAX })
+    OptionsManager.registerOption2(LANGUAGETRACKER_FRAME_STYLE, false, option_header, "option_label_LANGUAGETRACKER_FRAME_STYLE", option_entry_cycler,
+    { baselabel = option_val_none, baseval = NONE, labels = "option_val_chat_LANGUAGETRACKER|option_val_story_LANGUAGETRACKER|option_val_whisper_LANGUAGETRACKER", values = "chat|story|whisper", default = NONE })
 
     USER_ISHOST = User.isHost()
 
@@ -42,7 +48,8 @@ end
 function displayChatMessage(sFormattedText, bSecret)
 	if not sFormattedText then return end
 
-	local msg = {font = "msgfont", icon = "languagetracker_icon", secret = false, text = sFormattedText}
+    local sMode = getMode()
+	local msg = {font = "msgfont", icon = "languagetracker_icon", secret = false, text = sFormattedText, mode = sMode};
 
 	-- deliverChatMessage() is a broadcast mechanism, addChatMessage() is local only.
 	if bSecret then
@@ -93,6 +100,15 @@ function getLanguageTableFromDatabaseNodes(nodeCharSheet)
     return aLanguageTable
 end
 
+function getMode()
+    local sFrameStyle = OptionsManager.getOption(LANGUAGETRACKER_FRAME_STYLE)
+    if sFrameStyle == NONE then
+        sFrameStyle = ""
+    end
+
+    return sFrameStyle
+end
+
 -- Handler for the message to do an attack from a mount.
 function insertBlankSeparatorIfNotEmpty(aTable)
 	if #aTable > 0 then table.insert(aTable, "") end
@@ -133,7 +149,7 @@ function processChatCommand(_, sParams)
         scope = "All Actor"
     end
 
-    insertFormattedTextWithSeparatorIfNonEmpty(aOutput, "\rLanguageTracker, " .. scope .. " Languages:")
+    insertFormattedTextWithSeparatorIfNonEmpty(aOutput, "LanguageTracker, " .. scope .. " Languages:")
     for _,v in ipairs(sortedLanguages) do
         local pcs = ""
         local bFirstRow = true
