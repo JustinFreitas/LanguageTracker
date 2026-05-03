@@ -26,6 +26,14 @@ function onInit()
     end
 end
 
+-- Helper to safely get an actor from a node/string, preferring the modern getActor method.
+local function getActorSafe(v)
+    if ActorManager.getActor then
+        return ActorManager.getActor(v)
+    end
+    return ActorManager.resolveActor(v)
+end
+
 function addLanguagesToTable(aTable, rCurrentActor, aCampaignLanguages, aLanguagesToAdd)
     for _,sLanguage in pairs(aLanguagesToAdd) do
         local language = StringManager.trim(sLanguage)
@@ -124,7 +132,7 @@ function processChatCommand(_, sParams)
     local allFriendlyLanguages = {}
 	for _,nodeCT in pairs(DB.getChildren(CombatManager.CT_LIST)) do
         if DB.getValue(nodeCT, "friendfoe", "foe") == "friend" or sParams == "all" then
-            local rCurrentActor = ActorManager.resolveActor(nodeCT)
+            local rCurrentActor = getActorSafe(nodeCT)
             local nodeCharSheet = DB.findNode(rCurrentActor.sCreatureNode)
             local aLanguagesToAdd
             if rCurrentActor.sType == "charsheet" then
