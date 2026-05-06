@@ -8,6 +8,14 @@ OFF = "off"
 ON = "on"
 USER_ISHOST = false
 
+-- Helper to safely get an actor from a node/string, preferring the modern getActor method.
+local function getActorSafe(v)
+    if ActorManager.getActor then
+        return ActorManager.getActor(v)
+    end
+    return ActorManager.resolveActor(v)
+end
+
 function onInit()
 	local option_header = "option_header_languagetracker"
     local option_val_none = "option_val_none_LANGUAGETRACKER"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="3.3" release="8.1|CoreRPG:4.1">
-	<announcement text="LanguageTracker v1.2 FGC/FGU CoreRPG/OSE/5E\r2023-2026 Justin Freitas, 5/3/26" font="emotefont" icon="languagetracker_icon" />
+	<announcement text="LanguageTracker v1.2 FGC/FGU CoreRPG/OSE/5E\r2023-2026 Justin Freitas, 5/4/26" font="emotefont" icon="languagetracker_icon" />
 	<properties>
 		<name>Feature: LanguageTracker</name>
 		<version>1.2</version>
