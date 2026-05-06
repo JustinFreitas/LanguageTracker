@@ -8,6 +8,17 @@ OFF = "off"
 ON = "on"
 USER_ISHOST = false
 
+-- Helper to safely check if a string is blank, preferring the modern StringManager method.
+local function isBlankSafe(s)
+    if StringManager.isBlank then
+        return StringManager.isBlank(s)
+    end
+    if type(s) ~= "string" then
+        return false
+    end
+    return (string.gsub(s, "%s+", "") == "")
+end
+
 -- Helper to safely get an actor from a node/string, preferring the modern getActor method.
 local function getActorSafe(v)
     if ActorManager.getActor then
@@ -34,14 +45,6 @@ function onInit()
     end
 end
 
--- Helper to safely get an actor from a node/string, preferring the modern getActor method.
-local function getActorSafe(v)
-    if ActorManager.getActor then
-        return ActorManager.getActor(v)
-    end
-    return ActorManager.resolveActor(v)
-end
-
 function addLanguagesToTable(aTable, rCurrentActor, aCampaignLanguages, aLanguagesToAdd)
     for _,sLanguage in pairs(aLanguagesToAdd) do
         local language = StringManager.trim(sLanguage)
@@ -62,7 +65,7 @@ end
 
 -- Puts a message in chat that is broadcast to everyone attached to the host (including the host) if bSecret is true, otherwise local only.
 function displayChatMessage(sFormattedText, bSecret)
-	if not sFormattedText then return end
+	if isBlankSafe(sFormattedText) then return end
 
     local sMode = getMode()
 	local msg = {font = "msgfont", icon = "languagetracker_icon", secret = false, text = sFormattedText, mode = sMode};
